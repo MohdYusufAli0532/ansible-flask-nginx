@@ -1,0 +1,13 @@
+# roles/nginx/tasks/main.yml
+
+- name: Install Nginx
+  apk:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Start Nginx
+  shell: nohup nginx -g 'daemon off;' > /opt/flask_app/nginx.log 2>&1 &
+
+- name: Restart Nginx
+  shell: nginx -s reload || nginx

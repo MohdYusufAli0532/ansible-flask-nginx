@@ -1,0 +1,21 @@
+# roles/flask/tasks/main.yml
+
+- name: Create app directory
+  file:
+    path: /opt/flask_app
+    state: directory
+
+- name: Copy Flask app
+  copy:
+    src: app.py
+    dest: /opt/flask_app/app.py
+
+- name: Install Flask
+  pip:
+    name: flask
+    executable: pip3
+
+- name: Run Flask app
+  shell: nohup python3 /opt/flask_app/app.py > /opt/flask_app/flask.log 2>&1 &
+  args:
+    chdir: /opt/flask_app
